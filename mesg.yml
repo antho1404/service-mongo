@@ -1,0 +1,72 @@
+name: MongoDB Service
+sid: mongo
+configuration:
+  env:
+    - DB_NAME=default # database name
+tasks:
+  write:
+    inputs:
+      collection:
+        description: Collection name
+        type: String
+      data:
+        description: Data to insert. It can be document or array of documents
+        type: Any
+      uniqueFields:
+        description: Fields to be considered unique as together
+        type: String
+        repeated: true
+        optional: true
+    outputs:
+      success:
+        data:
+          _ids:
+            description: _ids of inserted documents
+            type: String
+            repeated: true
+      failure:
+        data:
+          message:
+            type: String
+  aggregate:
+    inputs:
+      collection:
+        description: Collection name
+        type: String
+      lookups:
+        description: Join collections
+        type: Object
+        repeated: true
+        optional: true
+        object:
+          collection:
+            description: Collection name
+            type: String
+          field:
+            description: Document field name to join with
+            type: String
+      project:
+        description: Document fields to select
+        type: Object
+        optional: true
+      noID:
+        description: Removes _id field from all documents
+        type: Boolean
+        optional: true
+      one:
+        description: Only pick first document
+        type: Boolean
+        optional: true
+    outputs:
+      success:
+        data:
+          data:
+            description: One document returned when 'one' set to true otherwise array of documents
+            type: Any
+dependencies:
+  mongo:
+    image: mongo:4
+    ports:
+      - 27017:27017
+    volumes:
+      - /var/lib/mongodb
