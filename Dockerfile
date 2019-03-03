@@ -3,6 +3,6 @@ WORKDIR /app
 COPY ./package* ./
 RUN npm install
 COPY . .
-ENV DEBUG marketplace
+ENV DEBUG mongo
 ENV coreAddr core:50052
 CMD [ "node", "index.js" ]

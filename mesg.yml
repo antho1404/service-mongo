@@ -3,6 +3,7 @@ sid: mongo
 configuration:
   env:
     - DB_NAME=default # database name
+    - TEXT_INDEXES= # JSON encoded 'collection name', 'text indexes' pair. e.g.: { "posts": ["title", "content"] }
 tasks:
   write:
     inputs:
@@ -45,9 +46,29 @@ tasks:
           field:
             description: Document field name to join with
             type: String
+      match:
+        description: Filtering query
+        type: Object
+        optional: true
       project:
         description: Document fields to select
         type: Object
+        optional: true
+      limit:
+        description: Limit for selecting documents
+        type: Number
+        optional: true
+      offset:
+        description: Offset for selecting documents
+        type: Number
+        optional: true
+      sort:
+        description: Sort documents
+        type: Object
+        optional: true
+      search:
+        description: Text search 
+        type: String
         optional: true
       noID:
         description: Removes _id field from all documents
@@ -63,6 +84,11 @@ tasks:
           data:
             description: One document returned when 'one' set to true otherwise array of documents
             type: Any
+            optional: true
+      failure:
+        data:
+          message:
+            type: String
 dependencies:
   mongo:
     image: mongo:4
