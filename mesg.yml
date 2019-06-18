@@ -19,16 +19,10 @@ tasks:
         repeated: true
         optional: true
     outputs:
-      success:
-        data:
-          _ids:
-            description: _ids of inserted documents
-            type: String
-            repeated: true
-      failure:
-        data:
-          message:
-            type: String
+      _ids:
+        description: _ids of inserted documents
+        type: String
+        repeated: true
   aggregate:
     inputs:
       collection:
@@ -79,16 +73,10 @@ tasks:
         type: Boolean
         optional: true
     outputs:
-      success:
-        data:
-          data:
-            description: One document returned when 'one' set to true otherwise array of documents
-            type: Any
-            optional: true
-      failure:
-        data:
-          message:
-            type: String
+      data:
+        description: One document returned when 'one' set to true otherwise array of documents
+        type: Any
+        optional: true
 dependencies:
   mongo:
     image: mongo:4

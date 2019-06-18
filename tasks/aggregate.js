@@ -9,7 +9,7 @@ module.exports = db => async ({
   search,
   noID,
   one
-}, { success, failure }) => {
+}) => {
   let expr = []
   let _match = {}
   if (search) Object.assign(_match, { $text: { $search: search } })
@@ -29,18 +29,14 @@ module.exports = db => async ({
   if (limit) expr.push({ $limit: limit })
   if (offset) expr.push({ $skip: offset })
   if (sort) expr.push({ $sort: sort })
-  try {
-    let results = await db.collection(collection).aggregate(expr).toArray()
-    if (noID) removeID(results)
-    if (one) {
-      let data = null
-      if (results.length > 0) data = results[0]
-      return success({ data })
-    }
-    return success({ data: results })
-  } catch (err) {
-    return failure({ message: err.toString() })
+  let results = await db.collection(collection).aggregate(expr).toArray()
+  if (noID) removeID(results)
+  if (one) {
+    let data = null
+    if (results.length > 0) data = results[0]
+    return { data }
   }
+  return { data: results }
 }
 
 function removeID(data) {

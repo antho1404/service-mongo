@@ -1,103 +1,93 @@
-# MongoDB Service
+# MongoDB Service (ID: mongo)
 
 
 
-# Contents
+## Contents
 
 - [Installation](#Installation)
+  - [MESG Engine](#MESG-Core)
+  - [Deploy the Service](#Service)
 - [Definitions](#Definitions)
-  
   - [Tasks](#Tasks)
-    - [aggregate](#aggregate)
     - [write](#write)
+    - [aggregate](#aggregate)
 
-# Installation
+## Installation
 
-## MESG Core
+### MESG Engine
 
-This service requires [MESG Core](https://github.com/mesg-foundation/core) to be installed first.
+This service requires [MESG Engine](https://github.com/mesg-foundation/core) to be installed first.
 
-You can install MESG Core by running the following command or [follow the installation guide](https://docs.mesg.com/guide/start-here/installation.html).
+You can install MESG Engine by running the following command or [follow the installation guide](https://docs.mesg.com/guide/start-here/installation.html).
 
 ```bash
 bash <(curl -fsSL https://mesg.com/install)
 ```
 
-## Service
+### Deploy the Service
 
-Download the source code of this service, and then in the service's folder, run the following command:
-```bash
-mesg-core service deploy
-```
+To deploy this service, go to [this service page](https://marketplace.mesg.com/services/mongo) on the [MESG Marketplace](https://marketplace.mesg.com) and click the button "get/buy this service".
 
-# Definitions
+## Definitions
 
 
-# Tasks
+### Tasks
 
-## aggregate
-
-Task key: `aggregate`
-
-
-
-### Inputs
-
-| **Name** | **Key** | **Type** | **Description** |
-| --- | --- | --- | --- |
-| **collection** | `collection` | `String` | Collection name |
-| **lookups** | `lookups` | `Object` | **`optional`** Join collections |
-| **noID** | `noID` | `Boolean` | **`optional`** Removes _id field from all documents |
-| **one** | `one` | `Boolean` | **`optional`** Only pick first document |
-| **project** | `project` | `Object` | **`optional`** Document fields to select |
-
-### Outputs
-
-#### success
-
-Output key: `success`
-
-
-
-| **Name** | **Key** | **Type** | **Description** |
-| --- | --- | --- | --- |
-| **data** | `data` | `Any` | One document returned when 'one' set to true otherwise array of documents |
-
-
-## write
+#### write
 
 Task key: `write`
 
 
 
-### Inputs
+##### Inputs
 
 | **Name** | **Key** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **collection** | `collection` | `String` | Collection name |
 | **data** | `data` | `Any` | Data to insert. It can be document or array of documents |
 | **uniqueFields** | `uniqueFields` | `String` | **`optional`** Fields to be considered unique as together |
+  
+##### Outputs
 
-### Outputs
+###### _ids
 
-#### failure
+Output key: `_ids`
 
-Output key: `failure`
-
-
-
-| **Name** | **Key** | **Type** | **Description** |
-| --- | --- | --- | --- |
-| **message** | `message` | `String` |  |
-
-#### success
-
-Output key: `success`
-
-
+_ids of inserted documents
 
 | **Name** | **Key** | **Type** | **Description** |
 | --- | --- | --- | --- |
-| **_ids** | `_ids` | `String` | _ids of inserted documents |
+
+#### aggregate
+
+Task key: `aggregate`
+
+
+
+##### Inputs
+
+| **Name** | **Key** | **Type** | **Description** |
+| --- | --- | --- | --- |
+| **collection** | `collection` | `String` | Collection name |
+| **lookups** | `lookups` | `Object` | **`optional`** Join collections |
+| **match** | `match` | `Object` | **`optional`** Filtering query |
+| **project** | `project` | `Object` | **`optional`** Document fields to select |
+| **limit** | `limit` | `Number` | **`optional`** Limit for selecting documents |
+| **offset** | `offset` | `Number` | **`optional`** Offset for selecting documents |
+| **sort** | `sort` | `Object` | **`optional`** Sort documents |
+| **search** | `search` | `String` | **`optional`** Text search |
+| **noID** | `noID` | `Boolean` | **`optional`** Removes _id field from all documents |
+| **one** | `one` | `Boolean` | **`optional`** Only pick first document |
+  
+##### Outputs
+
+###### data
+
+Output key: `data`
+
+One document returned when &#x27;one&#x27; set to true otherwise array of documents
+
+| **Name** | **Key** | **Type** | **Description** |
+| --- | --- | --- | --- |
 
 

@@ -1,21 +1,17 @@
-module.exports = db => async ({ collection, data, uniqueFields }, { success, failure }) => {
+module.exports = db => async ({ collection, data, uniqueFields }) => {
   const records = []
   if (data instanceof Array) {
     data.forEach((item) => records.push(genRecord({ data: item, uniqueFields })))
   } else if(Object.keys(data).length > 0) {
     records.push(genRecord({ data, uniqueFields }))
   }
-  try {
-    let _ids = []
-    if (records.length > 0) {
-      const result = await db.collection(collection).bulkWrite(records)
-      result.getUpsertedIds().slice(0).concat(result.getInsertedIds())
-        .forEach((item) => _ids.push(item._id))
-    }
-    return success({ _ids })
-  } catch ({ message }) {
-    return failure({ message })
+  let _ids = []
+  if (records.length > 0) {
+    const result = await db.collection(collection).bulkWrite(records)
+    result.getUpsertedIds().slice(0).concat(result.getInsertedIds())
+      .forEach((item) => _ids.push(item._id))
   }
+  return { _ids }
 } 
 
 function genRecord({ data, uniqueFields }) {
