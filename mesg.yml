@@ -1,5 +1,5 @@
 name: MongoDB Service
-sid: mongo
+sid: mongodb
 configuration:
   env:
     - DB_NAME=default # database name
