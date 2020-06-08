@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@liteflow/service": "^1.0.7",
     "debug": "^4.1.1",
-    "mesg-js": "^3.0.0-beta.0",
     "mongodb": "^3.1.13"
   }
 }

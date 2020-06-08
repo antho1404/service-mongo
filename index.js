@@ -1,4 +1,4 @@
-const mesg = require('mesg-js').service()
+const liteflow = new (require('@liteflow/service'))()
 const debug = require('debug')('mongo')
 const { MongoClient } = require('mongodb')
 
@@ -10,7 +10,7 @@ async function main(){
 
   await createIndexes(db)
   
-  mesg.listenTask({
+  liteflow.listenTask({
     write: require('./tasks/write')(db),
     aggregate: require('./tasks/aggregate')(db)
   })
